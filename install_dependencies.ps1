@@ -9,7 +9,14 @@ if (-not (Test-Path ".venv")) {
 }
 
 Write-Host "Ativando ambiente virtual..."
-& ".\.venv\Scripts\Activate.ps1"
+try {
+    & ".\.venv\Scripts\Activate.ps1"
+}
+catch {
+    Write-Host "A ativação foi bloqueada pela política de execução. Ajustando para o usuário atual..."
+    Set-ExecutionPolicy RemoteSigned -Scope CurrentUser -Force
+    & ".\.venv\Scripts\Activate.ps1"
+}
 
 Write-Host "Atualizando pip..."
 python -m pip install --upgrade pip

@@ -22,6 +22,14 @@ python -m venv .venv
 ```powershell
 .\.venv\Scripts\Activate.ps1
 ```
+Se erro execute 
+```powershell
+Set-ExecutionPolicy RemoteSigned -Scope CurrentUser
+``` 
+e depois o comando 
+```powershell
+.\.venv\Scripts\Activate.ps1
+```
 
 4. Instale as dependências:
 
@@ -51,14 +59,22 @@ DATABASE_URL=sqlite:///db.sqlite3
 ```powershell
 python manage.py migrate
 ```
+8. Para criar uma nova chave no SECRET_KEY:
+```porwershell
+python -c "from django.core.management.utils import get_random_secret_key; print(get_random_secret_key())"
+```
 
-8. Inicie o servidor:
+```powershell
+python manage.py migrate
+```
+
+9. Inicie o servidor:
 
 ```powershell
 python manage.py runserver
 ```
 
-9. Acesse:
+10. Acesse:
 
 ```text
 http://127.0.0.1:8000/
