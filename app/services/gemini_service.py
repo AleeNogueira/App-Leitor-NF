@@ -63,7 +63,7 @@ def extrair_dados_nota_fiscal(arquivo_django):
         )
 
         response = client.models.generate_content(
-            model="gemini-2.5-flash",
+            model="gemini-3.5-flash-lite",
             contents=[uploaded_file, PROMPT],
         )
 
