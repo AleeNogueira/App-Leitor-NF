@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h2>Upload de Nota Fiscal</h2>
+
+<form method="post" enctype="multipart/form-data">
+  {% csrf_token %}
+  {{ form.as_p }}
+  <button type="submit">Enviar</button>
+</form>
+
+{% if erro %}
+  <p style="color:red;">{{ erro }}</p>
+{% endif %}
+
+{% if dados %}
+  <h3>Dados extraídos</h3>
+  <table>
+    <tr><th>Fornecedor</th><td>{{ dados.fornecedor.razao_social }} ({{ dados.fornecedor.cnpj }})</td></tr>
+    <tr><th>Faturado</th><td>{{ dados.faturado.nome_completo }} ({{ dados.faturado.cpf }})</td></tr>
+    <tr><th>Número da NF</th><td>{{ dados.numero }}</td></tr>
+    <tr><th>Data Emissão</th><td>{{ dados.data_emissao }}</td></tr>
+    <tr><th>Valor Total</th><td>{{ dados.valor_total }}</td></tr>
+    <tr><th>Tipo Despesa</th><td>{{ dados.tipo_despesa }}</td></tr>
+  </table>
+
+  <h4>Parcelas</h4>
+  <ul>
+    {% for parcela in dados.parcelas %}
+      <li>Nº {{ parcela.numero_parcela }} — Venc: {{ parcela.data_vencimento }} — R$ {{ parcela.valor }}</li>
+    {% endfor %}
+  </ul>
+
+  <form method="post" action="{% url 'confirmar_nota_fiscal' %}">
+    {% csrf_token %}
+    <input type="hidden" name="dados_json" value='{{ dados|safe }}'>
+    <button type="submit">Confirmar e salvar</button>
+  </form>
+{% endif %}
+{% endblock %}
