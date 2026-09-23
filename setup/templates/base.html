@@ -1,14 +1,15 @@
 <!DOCTYPE html>
+{% load static %}
 <html>
 <head>
-    <title>{% block title %}Meu Site{% endblock %}</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Leitor de Nota Fiscal{% endblock %}</title>
+    <link rel="stylesheet" href="{% static 'app/style.css' %}">
 </head>
 <body>
-    <header>Menu / Logo</header>
-
-    {% block content %}
-    {% endblock %}
-
-    <footer>Rodapé</footer>
+    <main class="page-shell">
+        {% block content %}{% endblock %}
+    </main>
 </body>
 </html>

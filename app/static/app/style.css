@@ -1,0 +1,70 @@
+:root {
+  --ink: #17171f;
+  --muted: #676771;
+  --paper: #f5f6f8;
+  --line: #e2e2e7;
+  --white: #ffffff;
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  color: var(--ink);
+  background: var(--paper);
+  font-family: "Segoe UI", Arial, sans-serif;
+}
+
+.page-shell { width: min(760px, calc(100vw - 32px)); margin: 0 auto; padding: 26px 0 40px; }
+.page-heading { margin-bottom: 18px; text-align: center; }
+h1, h2, h3, p { margin-top: 0; }
+h1 { margin-bottom: 7px; font-size: 20px; line-height: 1.2; }
+.page-heading p { margin-bottom: 0; color: var(--muted); font-size: 11px; }
+.upload-panel, .results-panel { margin-top: 12px; border: 1px solid var(--line); border-radius: 9px; background: var(--white); box-shadow: 0 2px 9px rgba(30, 30, 50, .04); }
+.upload-panel { padding: 13px 14px 12px; }
+.file-field { margin-bottom: 9px; }
+.file-field label { display: block; margin-bottom: 9px; font-size: 11px; font-weight: 600; }
+.upload-icon { margin-right: 4px; font-size: 14px; }
+.field-help { display: block; margin-bottom: 5px; font-size: 9px; font-weight: 600; }
+input[type="file"] { width: 100%; padding: 0; color: #23232b; font: 9px "Segoe UI", Arial, sans-serif; }
+input[type="file"]::file-selector-button { margin-right: 6px; padding: 5px 8px; border: 0; border-radius: 5px; background: #efeff2; color: #2b2b32; cursor: pointer; font: inherit; }
+.button { border: 0; border-radius: 5px; padding: 8px 12px; cursor: pointer; font: 700 9px "Segoe UI", Arial, sans-serif; transition: background .2s, transform .2s; }
+.button:hover { transform: translateY(-1px); }
+.button-primary { width: 100%; background: #05050e; color: white; }
+.button-primary:hover { background: #252531; }
+.button-primary span { margin-right: 6px; font-size: 10px; }
+.error-message { margin-top: 12px; padding: 10px; border-radius: 6px; background: #fff0eb; color: #a33c2c; font-size: 11px; }
+.results-panel { padding: 13px 14px; }
+.results-heading, .section-heading, .installment-row { display: flex; align-items: center; justify-content: space-between; gap: 18px; }
+.results-heading { margin-bottom: 13px; }
+.results-heading h2 { margin-bottom: 0; font-size: 11px; font-weight: 500; }
+.view-switcher { display: flex; width: 100%; padding: 2px; border-radius: 8px; background: #e9e9ed; }
+.view-button { flex: 1; border: 0; border-radius: 7px; padding: 5px 8px; background: transparent; color: #22222a; cursor: pointer; font: 600 9px "Segoe UI", Arial, sans-serif; }
+.view-button.is-active { background: var(--white); box-shadow: 0 1px 3px rgba(20, 20, 30, .08); }
+.data-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 7px; }
+.data-card { min-height: 76px; padding: 12px; border-radius: 7px; background: #f2f2f5; }
+.data-card-wide { grid-column: span 2; }
+.card-label { display: block; margin-bottom: 9px; color: var(--muted); font-size: 8px; font-weight: 700; }
+.data-card strong { display: block; font-size: 11px; line-height: 1.3; }
+.data-card small { display: block; margin-top: 4px; color: var(--muted); font-size: 9px; }
+.installments { margin-top: 15px; }
+.section-heading { padding-bottom: 7px; border-bottom: 1px solid var(--line); }
+.section-heading h3 { margin: 0; font-size: 11px; }
+.section-heading span { color: var(--muted); font-size: 9px; }
+.installment-row { padding: 8px 0; border-bottom: 1px solid var(--line); font-size: 10px; }
+.installment-number { display: grid; place-items: center; width: 20px; height: 20px; border-radius: 50%; background: #e5e5e9; font-size: 9px; font-weight: 700; }
+.installment-row span:not(.installment-number) { flex: 1; color: var(--muted); }
+.installment-row span strong { color: var(--ink); }
+.empty-state { margin: 12px 0 0; color: var(--muted); font-size: 10px; }
+.json-view { overflow: auto; border-radius: 7px; background: #111116; }
+.json-view pre { min-height: 180px; margin: 0; padding: 14px; color: #f4f4f5; font: 10px/1.6 Consolas, monospace; white-space: pre-wrap; }
+
+@media (max-width: 700px) {
+  .page-shell { width: min(760px, calc(100vw - 16px)); padding-top: 18px; }
+  .upload-panel, .results-panel { padding: 11px; }
+  .data-grid { grid-template-columns: repeat(2, 1fr); }
+  .data-card-wide { grid-column: span 2; }
+  .installment-row { flex-wrap: wrap; }
+  .installment-row span:not(.installment-number) { min-width: 70%; }
+  .installment-row > strong { margin-left: 42px; }
+}

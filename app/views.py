@@ -2,8 +2,6 @@ import json
 from django.shortcuts import render
 from .forms import UploadNotaFiscalForm
 from .services.gemini_service import extrair_dados_nota_fiscal
-from django.shortcuts import redirect
-from .models import Fornecedor, Faturado, NotaFiscal, TipoDespesa, Parcela
 
 
 def upload_nota_fiscal(request):
@@ -31,44 +29,3 @@ def upload_nota_fiscal(request):
         "dados_json": dados_json,
         "erro": erro,
     })
-
-
-
-def confirmar_nota_fiscal(request):
-    if request.method == "POST":
-        dados = json.loads(request.POST["dados_json"])
-
-        fornecedor, _ = Fornecedor.objects.get_or_create(
-            cnpj=dados["fornecedor"]["cnpj"],
-            defaults={
-                "razao_social": dados["fornecedor"]["razao_social"],
-                "nome_fantasia": dados["fornecedor"]["nome_fantasia"],
-            },
-        )
-        faturado, _ = Faturado.objects.get_or_create(
-            cpf=dados["faturado"]["cpf"],
-            defaults={"nome_completo": dados["faturado"]["nome_completo"]},
-        )
-        tipo_despesa, _ = TipoDespesa.objects.get_or_create(
-            nome=dados["tipo_despesa"]
-        )
-
-        nota = NotaFiscal.objects.create(
-            fornecedor=fornecedor,
-            faturado=faturado,
-            numero=dados["numero"],
-            data_emissao=dados["data_emissao"],
-            descricao_produtos=dados["descricao_produtos"],
-            valor_total=dados["valor_total"],
-        )
-        nota.tipos_despesa.add(tipo_despesa)
-
-        for p in dados["parcelas"]:
-            Parcela.objects.create(
-                nota_fiscal=nota,
-                numero_parcela=p["numero_parcela"],
-                data_vencimento=p["data_vencimento"],
-                valor=p["valor"],
-            )
-
-        return redirect("nota_fiscal_sucesso")

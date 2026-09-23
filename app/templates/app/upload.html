@@ -1,40 +1,81 @@
 {% extends "base.html" %}
 
 {% block content %}
-<h2>Upload de Nota Fiscal</h2>
+<header class="page-heading">
+  <h1>Extração de Dados de Nota Fiscal</h1>
+  <p>Carregue um PDF de nota fiscal e extraia os dados automaticamente usando IA</p>
+</header>
 
-<form method="post" enctype="multipart/form-data">
+<section class="upload-panel">
+  <form method="post" enctype="multipart/form-data">
   {% csrf_token %}
-  {{ form.as_p }}
-  <button type="submit">Enviar</button>
-</form>
+    <div class="file-field">
+      <label for="id_arquivo"><span class="upload-icon">↥</span> Upload do PDF</label>
+      <span class="field-help">Selecione o arquivo PDF da nota fiscal</span>
+      {{ form.arquivo }}
+    </div>
+    <button class="button button-primary" type="submit"><span>◉</span> EXTRAIR DADOS</button>
+  </form>
+</section>
 
 {% if erro %}
-  <p style="color:red;">{{ erro }}</p>
+  <p class="error-message">{{ erro }}</p>
 {% endif %}
 
 {% if dados %}
-  <h3>Dados extraídos</h3>
-  <table>
-    <tr><th>Fornecedor</th><td>{{ dados.fornecedor.razao_social }} ({{ dados.fornecedor.cnpj }})</td></tr>
-    <tr><th>Faturado</th><td>{{ dados.faturado.nome_completo }} ({{ dados.faturado.cpf }})</td></tr>
-    <tr><th>Número da NF</th><td>{{ dados.numero }}</td></tr>
-    <tr><th>Data Emissão</th><td>{{ dados.data_emissao }}</td></tr>
-    <tr><th>Valor Total</th><td>{{ dados.valor_total }}</td></tr>
-    <tr><th>Tipo Despesa</th><td>{{ dados.tipo_despesa }}</td></tr>
-  </table>
+  <section class="results-panel">
+    <div class="results-heading">
+      <div>
+        <h2>Dados Extraídos</h2>
+      </div>
+      <div class="view-switcher" role="group" aria-label="Modo de visualização">
+        <button class="view-button is-active" type="button" data-view="cards">Visualização Formatada</button>
+        <button class="view-button" type="button" data-view="json">JSON</button>
+      </div>
+    </div>
 
-  <h4>Parcelas</h4>
-  <ul>
-    {% for parcela in dados.parcelas %}
-      <li>Nº {{ parcela.numero_parcela }} — Venc: {{ parcela.data_vencimento }} — R$ {{ parcela.valor }}</li>
-    {% endfor %}
-  </ul>
+    <div id="cards-view" class="data-view">
+      <div class="data-grid">
+        <article class="data-card data-card-wide">
+          <span class="card-label">Fornecedor</span>
+          <strong>{{ dados.fornecedor.razao_social }}</strong>
+          <small>CNPJ {{ dados.fornecedor.cnpj }}</small>
+        </article>
+        <article class="data-card data-card-wide">
+          <span class="card-label">Faturado</span>
+          <strong>{{ dados.faturado.nome_completo }}</strong>
+          <small>CPF {{ dados.faturado.cpf }}</small>
+        </article>
+        <article class="data-card"><span class="card-label">Número da NF</span><strong>{{ dados.numero }}</strong></article>
+        <article class="data-card"><span class="card-label">Data de emissão</span><strong>{{ dados.data_emissao }}</strong></article>
+        <article class="data-card"><span class="card-label">Valor total</span><strong>R$ {{ dados.valor_total }}</strong></article>
+        <article class="data-card"><span class="card-label">Tipo de despesa</span><strong>{{ dados.tipo_despesa }}</strong></article>
+      </div>
 
-  <form method="post" action="{% url 'confirmar_nota_fiscal' %}">
-    {% csrf_token %}
-    <input type="hidden" name="dados_json" value='{{ dados|safe }}'>
-    <button type="submit">Confirmar e salvar</button>
-  </form>
+      <div class="installments">
+        <div class="section-heading"><h3>Parcelas</h3><span>{{ dados.parcelas|length }} registrada(s)</span></div>
+        {% for parcela in dados.parcelas %}
+          <div class="installment-row"><span class="installment-number">{{ parcela.numero_parcela }}</span><span>Vencimento <strong>{{ parcela.data_vencimento }}</strong></span><strong>R$ {{ parcela.valor }}</strong></div>
+        {% empty %}
+          <p class="empty-state">Nenhuma parcela encontrada.</p>
+        {% endfor %}
+      </div>
+    </div>
+
+    <div id="json-view" class="data-view json-view" hidden>
+      <pre>{{ dados_json }}</pre>
+    </div>
+  </section>
 {% endif %}
+
+<script>
+  document.querySelectorAll('.view-button').forEach((button) => {
+    button.addEventListener('click', () => {
+      const showJson = button.dataset.view === 'json';
+      document.querySelector('#cards-view').hidden = showJson;
+      document.querySelector('#json-view').hidden = !showJson;
+      document.querySelectorAll('.view-button').forEach((item) => item.classList.toggle('is-active', item === button));
+    });
+  });
+</script>
 {% endblock %}
