@@ -17,6 +17,15 @@ class LocalLoginTests(TestCase):
 		self.assertRedirects(response, reverse("upload_nota_fiscal"))
 		self.assertTrue(self.client.session["local_user_authenticated"])
 
+	def test_login_returns_to_safe_next_url(self):
+		next_url = reverse("upload_nota_fiscal_alias")
+		response = self.client.post(
+			f"{reverse('login')}?next={next_url}",
+			{"username": "admin", "password": "admin", "next": next_url},
+		)
+
+		self.assertRedirects(response, next_url)
+
 	def test_invalid_credentials_are_rejected(self):
 		response = self.client.post(
 			reverse("login"),
