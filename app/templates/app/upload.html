@@ -1,6 +1,13 @@
 {% extends "base.html" %}
 
 {% block content %}
+<div class="page-toolbar">
+  <span>Conectado como <strong>{{ request.session.local_username }}</strong></span>
+  <form method="post" action="{% url 'logout' %}">
+    {% csrf_token %}
+    <button class="logout-button" type="submit">Sair</button>
+  </form>
+</div>
 <header class="page-heading">
   <h1>Extração de Dados de Nota Fiscal</h1>
   <p>Carregue um PDF de nota fiscal e extraia os dados automaticamente usando IA</p>

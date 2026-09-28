@@ -96,6 +96,10 @@ Configure também `CSRF_TRUSTED_ORIGINS` com a URL completa do site, incluindo `
 
 Use `python manage.py collectstatic --noinput` como comando de build da plataforma. Execute `python manage.py migrate` após configurar o banco de produção. Em produção, use um banco persistente como PostgreSQL em vez do SQLite local.
 
+## Acesso à aplicação
+
+O acesso de demonstração usa o usuário `admin` e a senha `admin`, validados pelo arquivo local `local_credentials.json`; a senha é guardada como hash. Essa credencial fixa é somente para demonstração/desenvolvimento e não deve ser usada em um site público. Para publicar, substitua por autenticação apropriada e uma senha forte.
+
 ## Observações
 
 - O arquivo `.env` não deve ser enviado para o Git.

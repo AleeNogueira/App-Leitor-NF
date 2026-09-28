@@ -16,6 +16,9 @@ body {
 }
 
 .page-shell { width: min(760px, calc(100vw - 32px)); margin: 0 auto; padding: 26px 0 40px; }
+.page-toolbar { display: flex; justify-content: flex-end; align-items: center; gap: 10px; margin-bottom: 14px; color: var(--muted); font-size: 10px; }
+.page-toolbar form { margin: 0; }
+.logout-button { padding: 5px 9px; border: 1px solid var(--line); border-radius: 5px; background: var(--white); color: var(--ink); cursor: pointer; font: inherit; }
 .page-heading { margin-bottom: 18px; text-align: center; }
 h1, h2, h3, p { margin-top: 0; }
 h1 { margin-bottom: 7px; font-size: 20px; line-height: 1.2; }
@@ -58,6 +61,14 @@ input[type="file"]::file-selector-button { margin-right: 6px; padding: 5px 8px; 
 .empty-state { margin: 12px 0 0; color: var(--muted); font-size: 10px; }
 .json-view { overflow: auto; border-radius: 7px; background: #111116; }
 .json-view pre { min-height: 180px; margin: 0; padding: 14px; color: #f4f4f5; font: 10px/1.6 Consolas, monospace; white-space: pre-wrap; }
+.login-shell { width: min(360px, 100%); margin: 9vh auto 0; }
+.login-mark { display: grid; place-items: center; width: 42px; height: 42px; margin: 0 auto 14px; border-radius: 12px; background: #05050e; color: #fff; font-size: 13px; font-weight: 800; }
+.login-panel { padding: 22px; border: 1px solid var(--line); border-radius: 9px; background: var(--white); box-shadow: 0 8px 30px rgba(30, 30, 50, .06); }
+.login-panel h2 { margin-bottom: 18px; font-size: 16px; }
+.login-field { margin-bottom: 14px; }
+.login-field label { display: block; margin-bottom: 6px; color: var(--muted); font-size: 11px; font-weight: 600; }
+.login-field input { width: 100%; padding: 10px 11px; border: 1px solid var(--line); border-radius: 6px; background: #fff; color: var(--ink); font: 13px "Segoe UI", Arial, sans-serif; }
+.login-field input:focus { outline: 2px solid #c9c9d2; outline-offset: 1px; }
 
 @media (max-width: 700px) {
   .page-shell { width: min(760px, calc(100vw - 16px)); padding-top: 18px; }
