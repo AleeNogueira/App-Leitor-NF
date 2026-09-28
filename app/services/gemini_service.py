@@ -6,12 +6,6 @@ from pathlib import Path
 from google import genai
 from django.conf import settings
 
-api_key = getattr(settings, "GEMINI_API_KEY", "") or os.getenv("GEMINI_API_KEY", "")
-if not api_key:
-    raise ValueError("Chave da API do Gemini não encontrada. Configure GEMINI_API_KEY no arquivo .env.")
-
-client = genai.Client(api_key=api_key)
-
 PROMPT = """
 Você é um extrator de dados de notas fiscais. Analise o arquivo
 enviado e retorne APENAS um JSON válido (sem markdown, sem texto
@@ -47,6 +41,11 @@ def extrair_dados_nota_fiscal(arquivo_django):
     Recebe um arquivo do Django (InMemoryUploadedFile) e retorna
     um dicionário com os dados extraídos pelo Gemini.
     """
+    api_key = settings.GEMINI_API_KEY
+    if not api_key:
+      raise ValueError("Chave da API do Gemini não configurada.")
+
+    client = genai.Client(api_key=api_key)
     arquivo_django.seek(0)
     nome_arquivo = Path(arquivo_django.name or "arquivo.pdf").name
     extensao = Path(nome_arquivo).suffix or ".pdf"

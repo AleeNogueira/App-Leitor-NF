@@ -16,6 +16,7 @@ env/
 # Django
 *.sqlite3
 /db.sqlite3
+/staticfiles/
 
 # Editor
 .vscode/
