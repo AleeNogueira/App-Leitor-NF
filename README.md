@@ -87,14 +87,14 @@ O arquivo `Procfile` inicia a aplicação com Gunicorn e escuta no endereço `0.
 Se a plataforma pedir um comando de inicialização, use:
 
 ```sh
-gunicorn setup.wsgi:application --bind 0.0.0.0:$PORT
+python manage.py migrate --noinput && gunicorn setup.wsgi:application --bind 0.0.0.0:$PORT
 ```
 
 Configure `SECRET_KEY`, `GEMINI_API_KEY`, `DEBUG=False` e `ALLOWED_HOSTS` como variáveis de ambiente no painel do provedor. Não publique o arquivo `.env`.
 
 Configure também `CSRF_TRUSTED_ORIGINS` com a URL completa do site, incluindo `https://` (por exemplo, `https://meu-site.exemplo.com`). Em plataformas que fornecem `RENDER_EXTERNAL_HOSTNAME`, o host e a origem HTTPS são adicionados automaticamente.
 
-Use `python manage.py collectstatic --noinput` como comando de build da plataforma. Execute `python manage.py migrate` após configurar o banco de produção. Em produção, use um banco persistente como PostgreSQL em vez do SQLite local.
+Use `pip install -r requirements.txt && python manage.py collectstatic --noinput` como comando de build da plataforma. O start command aplica as migrações antes de iniciar o servidor. Em produção, use um banco persistente como PostgreSQL em vez do SQLite local.
 
 ## Acesso à aplicação
 
