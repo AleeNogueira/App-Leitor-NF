@@ -80,6 +80,18 @@ python manage.py runserver
 http://127.0.0.1:8000/
 ```
 
+## Deploy
+
+O arquivo `Procfile` inicia a aplicação com Gunicorn e escuta no endereço `0.0.0.0` usando a porta definida pela plataforma na variável `PORT`.
+
+Se a plataforma pedir um comando de inicialização, use:
+
+```sh
+gunicorn setup.wsgi:application --bind 0.0.0.0:$PORT
+```
+
+Configure `SECRET_KEY`, `GEMINI_API_KEY`, `DEBUG=False` e `ALLOWED_HOSTS` como variáveis de ambiente no painel do provedor. Não publique o arquivo `.env`.
+
 ## Observações
 
 - O arquivo `.env` não deve ser enviado para o Git.
