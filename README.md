@@ -1,12 +1,7 @@
-# Sistema de Upload e Extração de Nota Fiscal
+## Acesso à aplicação
 
-Este projeto é uma aplicação Django para enviar arquivos de nota fiscal e extrair dados com a API do Gemini.
+O acesso de demonstração usa o usuário `admin` e a senha `admin`.
 
-## Requisitos
-
-- Python 3.11+
-- Git
-- Acesso à API do Gemini com chave válida
 
 ## Setup inicial
 
@@ -80,28 +75,3 @@ python manage.py runserver
 http://127.0.0.1:8000/
 ```
 
-## Deploy
-
-O arquivo `Procfile` inicia a aplicação com Gunicorn e escuta no endereço `0.0.0.0` usando a porta definida pela plataforma na variável `PORT`.
-
-Se a plataforma pedir um comando de inicialização, use:
-
-```sh
-python manage.py migrate --noinput && gunicorn setup.wsgi:application --bind 0.0.0.0:$PORT
-```
-
-Configure `SECRET_KEY`, `GEMINI_API_KEY`, `DEBUG=False` e `ALLOWED_HOSTS` como variáveis de ambiente no painel do provedor. Não publique o arquivo `.env`.
-
-Configure também `CSRF_TRUSTED_ORIGINS` com a URL completa do site, incluindo `https://` (por exemplo, `https://meu-site.exemplo.com`). Em plataformas que fornecem `RENDER_EXTERNAL_HOSTNAME`, o host e a origem HTTPS são adicionados automaticamente.
-
-Use `pip install -r requirements.txt && python manage.py collectstatic --noinput` como comando de build da plataforma. O start command aplica as migrações antes de iniciar o servidor. Em produção, use um banco persistente como PostgreSQL em vez do SQLite local.
-
-## Acesso à aplicação
-
-O acesso de demonstração usa o usuário `admin` e a senha `admin`, validados pelo arquivo local `local_credentials.json`; a senha é guardada como hash. Essa credencial fixa é somente para demonstração/desenvolvimento e não deve ser usada em um site público. Para publicar, substitua por autenticação apropriada e uma senha forte.
-
-## Observações
-
-- O arquivo `.env` não deve ser enviado para o Git.
-- A chave do Gemini deve ser válida e com acesso habilitado.
-- Caso a API retorne erro 403, verifique a chave e o acesso do projeto no Google AI Studio / Google Cloud.
