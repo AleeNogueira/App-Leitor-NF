@@ -9,7 +9,7 @@ from django.urls import reverse
 from django.utils.http import url_has_allowed_host_and_scheme
 
 from .forms import LoginForm, UploadNotaFiscalForm
-from .services.gemini_service import extrair_dados_nota_fiscal
+from .agents.agent1.manipulacao_dados import extrair_dados_nota_fiscal
 
 
 def login_required_local(view_func):
