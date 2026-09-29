@@ -2,7 +2,9 @@
 
 O acesso de demonstração usa o usuário `admin` e a senha `admin`.
 
-
+link para acessar a aplicação: https://app-leitor-nf.onrender.com/login/
+link para acessar o vídeo: https://youtu.be/eTjhk2gayO0
+link para acessar o repositório: https://github.com/AleeNogueira/App-Leitor-NF
 ## Setup inicial
 
 1. Clone o repositório.
